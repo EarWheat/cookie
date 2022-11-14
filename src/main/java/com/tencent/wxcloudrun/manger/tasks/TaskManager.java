@@ -1,9 +1,7 @@
-package com.tencent.wxcloudrun.manger;
+package com.tencent.wxcloudrun.manger.tasks;
 
 import com.tencent.wxcloudrun.dto.task.TaskRenderVO;
 import com.tencent.wxcloudrun.dto.task.TaskRequestParam;
-
-import java.util.List;
 
 /**
  * @Desc:
@@ -11,7 +9,7 @@ import java.util.List;
  * @Date: 2022/11/13 2:55 PM
  * @Version: 1.initial version; 2022/11/13 2:55 PM
  */
-public interface AbstractTaskManager {
+public interface TaskManager {
 
     /**
      * 获取任务
@@ -20,12 +18,4 @@ public interface AbstractTaskManager {
      * @return
      */
     public TaskRenderVO getTask(TaskRequestParam param);
-
-    /**
-     * 获取任务详情
-     *
-     * @param param
-     * @return
-     */
-    public List<TaskRenderVO> getTaskList(TaskRequestParam param);
 }

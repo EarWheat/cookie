@@ -1,5 +1,6 @@
 package com.tencent.wxcloudrun.dto.task;
 
+import com.tencent.wxcloudrun.enums.TaskEnum;
 import lombok.Data;
 
 /**
@@ -10,4 +11,18 @@ import lombok.Data;
  */
 @Data
 public class TaskRenderVO {
+
+    /**
+     * 任务类型
+     */
+    public TaskEnum task;
+    /**
+     * 任务标题
+     */
+    public String taskTitle;
+
+    /**
+     * 任务icon
+     */
+    public String taskIcon;
 }

@@ -2,7 +2,7 @@ package com.tencent.wxcloudrun.factory;
 
 import com.tencent.wxcloudrun.annotations.Task;
 import com.tencent.wxcloudrun.enums.TaskEnum;
-import com.tencent.wxcloudrun.manger.AbstractTaskManager;
+import com.tencent.wxcloudrun.manger.tasks.TaskManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
@@ -27,14 +27,14 @@ public class TaskFactory implements ApplicationContextAware, InitializingBean {
     /**
      * 任务容器
      */
-    public static Map<TaskEnum, AbstractTaskManager> taskContainer;
+    public static Map<TaskEnum, TaskManager> taskContainer;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
-    public static AbstractTaskManager getTaskManager(TaskEnum taskEnum) {
+    public static TaskManager getTaskManager(TaskEnum taskEnum) {
         return taskContainer.get(taskEnum);
     }
 
@@ -44,7 +44,7 @@ public class TaskFactory implements ApplicationContextAware, InitializingBean {
         taskManagers.forEach((key, value) -> {
             try {
                 TaskEnum taskEnum = value.getClass().getAnnotation(Task.class).value();
-                taskContainer.put(taskEnum, (AbstractTaskManager) value);
+                taskContainer.put(taskEnum, (TaskManager) value);
             } catch (Exception e) {
                 log.error("");
             }

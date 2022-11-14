@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.manger;
+package com.tencent.wxcloudrun.manger.tasks;
 
 /**
  * @Desc:
@@ -6,5 +6,5 @@ package com.tencent.wxcloudrun.manger;
  * @Date: 2022/11/13 2:56 PM
  * @Version: 1.initial version; 2022/11/13 2:56 PM
  */
-public interface SignInTaskManager extends AbstractTaskManager {
+public interface SignInTaskManager extends TaskManager {
 }
