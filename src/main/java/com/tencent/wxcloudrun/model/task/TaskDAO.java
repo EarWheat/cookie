@@ -2,6 +2,8 @@ package com.tencent.wxcloudrun.model.task;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @Desc: 抽象
  * @Author: 泽露
@@ -9,5 +11,7 @@ import lombok.Data;
  * @Version: 1.initial version; 2022/11/14 5:46 PM
  */
 @Data
-public class TaskDAO {
+public class TaskDAO implements Serializable {
+
+
 }
