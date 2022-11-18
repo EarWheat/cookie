@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencent.wxcloudrun.dao.TaskMapper">
+
+
+    <insert id="insertTaskDAO"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `Task`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="taskId!=null">
+                        `task_id`,
+                    </if>
+                    <if test="taskTitle!=null">
+                        `task_title`,
+                    </if>
+                    <if test="taskIcon!=null">
+                        `task_icon`,
+                    </if>
+                    <if test="taskMaxTime!=null">
+                        `task_max_time`,
+                    </if>
+                    <if test="taskStatus!=null">
+                        `task_status`,
+                    </if>
+                    <if test="taskAwardPoint!=null">
+                        `task_award_point`,
+                    </if>
+                    <if test="createTime!=null">
+                        `create_time`,
+                    </if>
+                    <if test="updateTime!=null">
+                        `update_time`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="taskId!=null">
+                    #{taskId},
+                </if>
+                <if test="taskTitle!=null">
+                    #{taskTitle},
+                </if>
+                <if test="taskIcon!=null">
+                    #{taskIcon},
+                </if>
+                <if test="taskMaxTime!=null">
+                    #{taskMaxTime},
+                </if>
+                <if test="taskStatus!=null">
+                    #{taskStatus},
+                </if>
+                <if test="taskAwardPoint!=null">
+                    #{taskAwardPoint},
+                </if>
+                <if test="createTime!=null">
+                    #{createTime},
+                </if>
+                <if test="updateTime!=null">
+                    #{updateTime},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateTaskDAO">
+        UPDATE `Task`
+        SET
+        <trim suffixOverrides=",">
+            <if test="taskId != null">
+                `task_id` = #{taskId},
+            </if>
+            <if test="taskTitle != null and taskTitle!=''">
+                `task_title` = #{taskTitle},
+            </if>
+            <if test="taskIcon != null and taskIcon!=''">
+                `task_icon` = #{taskIcon},
+            </if>
+            <if test="taskMaxTime != null">
+                `task_max_time` = #{taskMaxTime},
+            </if>
+            <if test="taskStatus != null and taskStatus!=''">
+                `task_status` = #{taskStatus},
+            </if>
+            <if test="taskAwardPoint != null">
+                `task_award_point` = #{taskAwardPoint},
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `Task`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.taskId != null">
+            `task_id` = #{set.taskId},
+        </if>
+        <if test="set.taskTitle != null and set.taskTitle!=''">
+            `task_title` = #{set.taskTitle},
+        </if>
+        <if test="set.taskIcon != null and set.taskIcon!=''">
+            `task_icon` = #{set.taskIcon},
+        </if>
+        <if test="set.taskMaxTime != null">
+            `task_max_time` = #{set.taskMaxTime},
+        </if>
+        <if test="set.taskStatus != null and set.taskStatus!=''">
+            `task_status` = #{set.taskStatus},
+        </if>
+        <if test="set.taskAwardPoint != null">
+            `task_award_point` = #{set.taskAwardPoint},
+        </if>
+        <if test="set.createTime != null">
+            `create_time` = #{set.createTime},
+        </if>
+        <if test="set.updateTime != null">
+            `update_time` = #{set.updateTime},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.idList != null">
+                    `id` in
+                    <foreach collection="where.idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.idSt !=null">
+                `id` >= #{where.idSt} and
+            </if>
+            <if test="where.idEd!=null">
+                `id` &lt;= #{where.idEd} and
+            </if>
+                <if test="where.taskIdList != null">
+                    `task_id` in
+                    <foreach collection="where.taskIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.taskIdSt !=null">
+                `task_id` >= #{where.taskIdSt} and
+            </if>
+            <if test="where.taskIdEd!=null">
+                `task_id` &lt;= #{where.taskIdEd} and
+            </if>
+                <if test="where.taskTitleList != null">
+                    `task_title` in
+                    <foreach collection="where.taskTitleList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTaskTitle!=null and where.fuzzyTaskTitle.size()>0">
+                (
+                <foreach collection="where.fuzzyTaskTitle"  separator="or" item="item">
+                    `Task_title` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTaskTitle!=null and where.rightFuzzyTaskTitle.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTaskTitle"  separator="or" item="item">
+                    `Task_title` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.taskIconList != null">
+                    `task_icon` in
+                    <foreach collection="where.taskIconList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTaskIcon!=null and where.fuzzyTaskIcon.size()>0">
+                (
+                <foreach collection="where.fuzzyTaskIcon"  separator="or" item="item">
+                    `Task_icon` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTaskIcon!=null and where.rightFuzzyTaskIcon.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTaskIcon"  separator="or" item="item">
+                    `Task_icon` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.taskMaxTimeList != null">
+                    `task_max_time` in
+                    <foreach collection="where.taskMaxTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.taskMaxTimeSt !=null">
+                `task_max_time` >= #{where.taskMaxTimeSt} and
+            </if>
+            <if test="where.taskMaxTimeEd!=null">
+                `task_max_time` &lt;= #{where.taskMaxTimeEd} and
+            </if>
+                <if test="where.taskStatusList != null">
+                    `task_status` in
+                    <foreach collection="where.taskStatusList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTaskStatus!=null and where.fuzzyTaskStatus.size()>0">
+                (
+                <foreach collection="where.fuzzyTaskStatus"  separator="or" item="item">
+                    `Task_status` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTaskStatus!=null and where.rightFuzzyTaskStatus.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTaskStatus"  separator="or" item="item">
+                    `Task_status` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.taskAwardPointList != null">
+                    `task_award_point` in
+                    <foreach collection="where.taskAwardPointList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.taskAwardPointSt !=null">
+                `task_award_point` >= #{where.taskAwardPointSt} and
+            </if>
+            <if test="where.taskAwardPointEd!=null">
+                `task_award_point` &lt;= #{where.taskAwardPointEd} and
+            </if>
+                <if test="where.createTimeList != null">
+                    `create_time` in
+                    <foreach collection="where.createTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.createTimeSt !=null">
+                `create_time` >= #{where.createTimeSt} and
+            </if>
+            <if test="where.createTimeEd!=null">
+                `create_time` &lt;= #{where.createTimeEd} and
+            </if>
+                <if test="where.updateTimeList != null">
+                    `update_time` in
+                    <foreach collection="where.updateTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.updateTimeSt !=null">
+                `update_time` >= #{where.updateTimeSt} and
+            </if>
+            <if test="where.updateTimeEd!=null">
+                `update_time` &lt;= #{where.updateTimeEd} and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="packageDAO.TaskDAO" id="TaskDAOMap">
+        <result property="id" column="id"/>
+        <result property="taskId" column="task_id"/>
+        <result property="taskTitle" column="task_title"/>
+        <result property="taskIcon" column="task_icon"/>
+        <result property="taskMaxTime" column="task_max_time"/>
+        <result property="taskStatus" column="task_status"/>
+        <result property="taskAwardPoint" column="task_award_point"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+    <select id="queryTaskDAO" resultMap="TaskDAOMap">
+        select
+        <include refid="baseResult"></include>
+        from  `Task`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="taskId != null">
+                `task_id` = #{taskId} and
+            </if>
+            <if test="taskTitle != null and taskTitle!=''">
+                `task_title` = #{taskTitle} and
+            </if>
+            <if test="taskIcon != null and taskIcon!=''">
+                `task_icon` = #{taskIcon} and
+            </if>
+            <if test="taskMaxTime != null">
+                `task_max_time` = #{taskMaxTime} and
+            </if>
+            <if test="taskStatus != null and taskStatus!=''">
+                `task_status` = #{taskStatus} and
+            </if>
+            <if test="taskAwardPoint != null">
+                `task_award_point` = #{taskAwardPoint} and
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime} and
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime} and
+            </if>
+            <if test = "(_parameter instanceof packageDAO.TaskDAO$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="taskIdList != null">
+                    `task_id` in
+                    <foreach collection="taskIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="taskIdSt !=null">
+                    `task_id` >= #{taskIdSt} and
+                </if>
+                <if test="taskIdEd!=null">
+                    `task_id` &lt;= #{taskIdEd} and
+                </if>
+                <if test="taskTitleList != null">
+                    `task_title` in
+                    <foreach collection="taskTitleList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTaskTitle!=null and fuzzyTaskTitle.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskTitle"  separator="or" item="item">
+                        `Task_title` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskTitle!=null and rightFuzzyTaskTitle.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskTitle"  separator="or" item="item">
+                        `Task_title` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="taskIconList != null">
+                    `task_icon` in
+                    <foreach collection="taskIconList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTaskIcon!=null and fuzzyTaskIcon.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskIcon"  separator="or" item="item">
+                        `Task_icon` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskIcon!=null and rightFuzzyTaskIcon.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskIcon"  separator="or" item="item">
+                        `Task_icon` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="taskMaxTimeList != null">
+                    `task_max_time` in
+                    <foreach collection="taskMaxTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="taskMaxTimeSt !=null">
+                    `task_max_time` >= #{taskMaxTimeSt} and
+                </if>
+                <if test="taskMaxTimeEd!=null">
+                    `task_max_time` &lt;= #{taskMaxTimeEd} and
+                </if>
+                <if test="taskStatusList != null">
+                    `task_status` in
+                    <foreach collection="taskStatusList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTaskStatus!=null and fuzzyTaskStatus.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskStatus"  separator="or" item="item">
+                        `Task_status` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskStatus!=null and rightFuzzyTaskStatus.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskStatus"  separator="or" item="item">
+                        `Task_status` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="taskAwardPointList != null">
+                    `task_award_point` in
+                    <foreach collection="taskAwardPointList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="taskAwardPointSt !=null">
+                    `task_award_point` >= #{taskAwardPointSt} and
+                </if>
+                <if test="taskAwardPointEd!=null">
+                    `task_award_point` &lt;= #{taskAwardPointEd} and
+                </if>
+                <if test="createTimeList != null">
+                    `create_time` in
+                    <foreach collection="createTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="createTimeSt !=null">
+                    `create_time` >= #{createTimeSt} and
+                </if>
+                <if test="createTimeEd!=null">
+                    `create_time` &lt;= #{createTimeEd} and
+                </if>
+                <if test="updateTimeList != null">
+                    `update_time` in
+                    <foreach collection="updateTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="updateTimeSt !=null">
+                    `update_time` >= #{updateTimeSt} and
+                </if>
+                <if test="updateTimeEd!=null">
+                    `update_time` &lt;= #{updateTimeEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryTaskDAOLimit1" resultMap="TaskDAOMap">
+        select
+        <include refid="baseResult"></include>
+        from  `Task`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="taskId != null">
+                `task_id` = #{taskId} and
+            </if>
+            <if test="taskTitle != null and taskTitle!=''">
+                `task_title` = #{taskTitle} and
+            </if>
+            <if test="taskIcon != null and taskIcon!=''">
+                `task_icon` = #{taskIcon} and
+            </if>
+            <if test="taskMaxTime != null">
+                `task_max_time` = #{taskMaxTime} and
+            </if>
+            <if test="taskStatus != null and taskStatus!=''">
+                `task_status` = #{taskStatus} and
+            </if>
+            <if test="taskAwardPoint != null">
+                `task_award_point` = #{taskAwardPoint} and
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime} and
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime} and
+            </if>
+            <if test = "(_parameter instanceof packageDAO.TaskDAO$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="taskIdList != null">
+                        `task_id` in
+                        <foreach collection="taskIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="taskIdSt !=null">
+                    `task_id` >= #{taskIdSt} and
+                </if>
+                <if test="taskIdEd!=null">
+                    `task_id` &lt;= #{taskIdEd} and
+                </if>
+                    <if test="taskTitleList != null">
+                        `task_title` in
+                        <foreach collection="taskTitleList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTaskTitle!=null and fuzzyTaskTitle.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskTitle"  separator="or" item="item">
+                        `Task_title` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskTitle!=null and rightFuzzyTaskTitle.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskTitle"  separator="or" item="item">
+                        `Task_title` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="taskIconList != null">
+                        `task_icon` in
+                        <foreach collection="taskIconList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTaskIcon!=null and fuzzyTaskIcon.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskIcon"  separator="or" item="item">
+                        `Task_icon` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskIcon!=null and rightFuzzyTaskIcon.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskIcon"  separator="or" item="item">
+                        `Task_icon` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="taskMaxTimeList != null">
+                        `task_max_time` in
+                        <foreach collection="taskMaxTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="taskMaxTimeSt !=null">
+                    `task_max_time` >= #{taskMaxTimeSt} and
+                </if>
+                <if test="taskMaxTimeEd!=null">
+                    `task_max_time` &lt;= #{taskMaxTimeEd} and
+                </if>
+                    <if test="taskStatusList != null">
+                        `task_status` in
+                        <foreach collection="taskStatusList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTaskStatus!=null and fuzzyTaskStatus.size()>0">
+                    (
+                    <foreach collection="fuzzyTaskStatus"  separator="or" item="item">
+                        `Task_status` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTaskStatus!=null and rightFuzzyTaskStatus.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTaskStatus"  separator="or" item="item">
+                        `Task_status` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="taskAwardPointList != null">
+                        `task_award_point` in
+                        <foreach collection="taskAwardPointList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="taskAwardPointSt !=null">
+                    `task_award_point` >= #{taskAwardPointSt} and
+                </if>
+                <if test="taskAwardPointEd!=null">
+                    `task_award_point` &lt;= #{taskAwardPointEd} and
+                </if>
+                    <if test="createTimeList != null">
+                        `create_time` in
+                        <foreach collection="createTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="createTimeSt !=null">
+                    `create_time` >= #{createTimeSt} and
+                </if>
+                <if test="createTimeEd!=null">
+                    `create_time` &lt;= #{createTimeEd} and
+                </if>
+                    <if test="updateTimeList != null">
+                        `update_time` in
+                        <foreach collection="updateTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="updateTimeSt !=null">
+                    `update_time` >= #{updateTimeSt} and
+                </if>
+                <if test="updateTimeEd!=null">
+                    `update_time` &lt;= #{updateTimeEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `task_id`,
+        `task_title`,
+        `task_icon`,
+        `task_max_time`,
+        `task_status`,
+        `task_award_point`,
+        `create_time`,
+        `update_time`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof packageDAO.TaskDAO$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.taskId==true">
+                        `task_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.taskTitle==true">
+                        `task_title`,
+                    </if>
+                    <if test="fetchFields.fetchFields.taskIcon==true">
+                        `task_icon`,
+                    </if>
+                    <if test="fetchFields.fetchFields.taskMaxTime==true">
+                        `task_max_time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.taskStatus==true">
+                        `task_status`,
+                    </if>
+                    <if test="fetchFields.fetchFields.taskAwardPoint==true">
+                        `task_award_point`,
+                    </if>
+                    <if test="fetchFields.fetchFields.createTime==true">
+                        `create_time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.updateTime==true">
+                        `update_time`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.taskId==null">
+                        `task_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.taskTitle==null">
+                        `task_title`,
+                    </if>
+                    <if test="fetchFields.excludeFields.taskIcon==null">
+                        `task_icon`,
+                    </if>
+                    <if test="fetchFields.excludeFields.taskMaxTime==null">
+                        `task_max_time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.taskStatus==null">
+                        `task_status`,
+                    </if>
+                    <if test="fetchFields.excludeFields.taskAwardPoint==null">
+                        `task_award_point`,
+                    </if>
+                    <if test="fetchFields.excludeFields.createTime==null">
+                        `create_time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.updateTime==null">
+                        `update_time`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof packageDAO.TaskDAO$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
