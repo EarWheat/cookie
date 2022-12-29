@@ -5,13 +5,13 @@ import lombok.Data;
 import java.util.HashMap;
 
 @Data
-public final class ApiResponse {
+public final class ApiResponse<T> {
 
   private Integer code;
   private String errorMsg;
-  private Object data;
+  private T data;
 
-  private ApiResponse(int code, String errorMsg, Object data) {
+  private ApiResponse(int code, String errorMsg, T data) {
     this.code = code;
     this.errorMsg = errorMsg;
     this.data = data;
@@ -21,7 +21,7 @@ public final class ApiResponse {
     return new ApiResponse(0, "", new HashMap<>());
   }
 
-  public static ApiResponse ok(Object data) {
+  public static <T> ApiResponse ok(T data) {
     return new ApiResponse(0, "", data);
   }
 

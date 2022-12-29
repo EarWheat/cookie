@@ -38,3 +38,5 @@ CREATE TABLE `Task` (
   PRIMARY KEY (`id`),
   unique `idx_task_id` USING btree (`task_id`)
 ) COMMENT = "任务类型表" ENGINE = innodb DEFAULT CHARACTER SET = "utf8mb4" COLLATE = "utf8mb4_general_ci"
+
+INSERT INTO `Task` (task_id, task_title, task_icon, task_max_time, task_award_point) VALUES ('1', '每日签到', 'sign_in', '1', '1000'),('2', '分享', 'share', '5', '500');

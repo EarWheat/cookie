@@ -29,12 +29,12 @@ public class TaskController {
     public TaskService taskService;
 
     @RequestMapping("/getTask")
-    public ApiResponse getTask() {
+    public ApiResponse<String> getTask() {
         return ApiResponse.ok("task empty");
     }
 
     @RequestMapping("/queryTaskList")
-    public ApiResponse queryTaskLists(@RequestBody TaskRequestParam param){
+    public ApiResponse<List<TaskRenderVO>> queryTaskLists(@RequestBody TaskRequestParam param){
         List<TaskRenderVO> taskRenderVOS = null;
         try {
             taskRenderVOS = taskService.queryTaskList(param);
