@@ -18,3 +18,10 @@ spring:
 
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
+
+
+elsticserach:
+  rest:
+    uris:
+    username: elastic
+    password: tAYzComWgpM8_BKaLwC_
